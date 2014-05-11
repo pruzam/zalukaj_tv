@@ -51,6 +51,13 @@ for m in movies:
     tmp.append('<div style="clear:both;"><div style="float:left;width:150px;margin-right:-150px;"><a href="action.py?img=%s&url=%s"><img style="width:150px;height:200px;" src="http://static.zalukaj.tv/image/%s.jpg" /></a><br /></div><div style="float:left;margin-left:160px">%s<br />%s</div></div><div style="clear:both;margin-top:10px">&nbsp;</div>' % (i, tmp_, i, t.encode('ascii', 'ignore'), d.encode('ascii', 'ignore')))
 
     
+tmp = []
+for e in set(re.findall('<div class="rmk23m4">.+?<div style=".*?">(.+?)&nbsp;<a href="(/zalukaj-film/(\d+)/.+?html)">.+?</a></div>', html, re.M | re.S )):
+    tmp_ = 'http://zalukaj.tv%s' % e[1]
+    if os.path.exists('%s.flv' % e[2]):
+        tmp_ = '%s.flv' % e[2]
+    tmp.append('<div style="clear:both;"><div style="float:left;width:150px;margin-right:-150px;"><a href="action.py?img=%s&url=%s"><img style="width:150px;height:200px;" src="http://static.zalukaj.tv/image/%s.jpg" /></a><br /></div><div style="float:left;margin-left:160px">%s</div></div><div style="clear:both;margin-top:10px">&nbsp;</div>' % (e[2], tmp_, e[2], e[0]))
+
 tmp2 = []
 for e in set(re.findall('<td class="wef32f"><a href=".*gatunek/(\d+)">(.+)</a></td>', html)):
     tmp2.append('<a href="index.py?type=%s&page=1">%s</a>' % (e[0], e[1]))
