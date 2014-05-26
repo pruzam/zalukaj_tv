@@ -56,6 +56,3 @@ if url1 is not None:
                 subprocess.Popen("at now <<< 'wget %s --tries=100 -O /media/NASDRIVE/www/%s.flv'" % (movie, name), shell=True, executable='/bin/bash', stdout=open("/dev/null", "w"), stderr=subprocess.STDOUT)
 
 print "Location: index.py\n\n"
-
-#print 'Content-Type: text/html\n\n'
-#print "at now <<< 'wget %s -O /var/www/%s.flv'" % (movie, name)
