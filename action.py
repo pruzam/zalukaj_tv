@@ -33,7 +33,7 @@ if url is not None and not os.path.exists(url):
     response = urllib2.urlopen(url)
     html = response.read()
 
-    m1 = re.search('player.php\?w=([A-Z0-9]+)&id=\d+', html)
+    m1 = re.search('player.php\?w=(\w+)&id=\d+', html)
     if m1:
         url2 = 'http://st.dwn.so/player/embed.php?v=%s&width=470&height=305' % m1.group(1)
 
@@ -56,7 +56,20 @@ if url is not None and not os.path.exists(url):
                 remove_movie()
                 subprocess.Popen("at now <<< 'wget %s --tries=100 -O %s'" % (movie, url), shell=True, executable='/bin/bash', stdout=open("/dev/null", "w"), stderr=subprocess.STDOUT)
                 time.sleep(1)
+            else:
+                url2 = 'http://vshare.io/v/%s/width-470/height-305/' % (m1.group(1))
+    
+                response = urllib2.urlopen(url2)
+                html = response.read()
 
+                m2 = re.search('\'(.+?stream.+?\.flv)\'', html)
+                if m2:
+                    movie = '%s' % m2.group(1)
+                    url = '%s.flv' % img
+
+                    remove_movie()
+                    subprocess.Popen("at now <<< 'wget %s --tries=100 -O %s'" % (movie, url), shell=True, executable='/bin/bash', stdout=open("/dev/null", "w"), stderr=subprocess.STDOUT)
+                    time.sleep(1)
 
 if url is not None and os.path.exists(url):
     #kill all omxplayer prrocesses
